@@ -14,6 +14,10 @@ Make sure you have Ballance and [Ballance Mod Loader](https://github.com/Gamepia
 - `Alt` + `S`: set your current position as the respawn point, just like `/spawn`.
 - `Alt` + `E`: restart the current level.
 
+### Known Issues
+
+- Restarting the level with the game amidst the fall/respawn animation can cause the whiteout effect to stay still. Trigger that animation again to reset the effect.
+
 ## FAQs
 
 ### Why not more shortcuts? How about adding the equivalent shortcut of "/sector X"?
@@ -22,7 +26,7 @@ The `/sector` command in Ballance Mod Loader uses its own private API and thus c
 
 ### Your coding style is so weird and inconsistent!
 
-Code of this project was mainly copied from [Ballance Mod Loader](https://github.com/Gamepiaynmo/BallanceModLoader) and [BallanceMMO](https://github.com/Swung0x48/BallanceMMO) and their code have already contained many different and conflicting styles. For such a small project (look at its code, it's literally only about matching shortcut keys) I don't think it's worth it to take the time tidying it up.
+Code of this project was mainly copied from [Ballance Mod Loader](https://github.com/Gamepiaynmo/BallanceModLoader) and [BallanceMMO](https://github.com/Swung0x48/BallanceMMO) and their code has already contained many different and conflicting styles. For such a small project (look at its code - it's literally only about matching shortcut keys) I don't think it's worth it to take the time tidying it up.
 
 ## Build the project
 

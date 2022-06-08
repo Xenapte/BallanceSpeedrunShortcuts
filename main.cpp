@@ -41,6 +41,8 @@ void SpeedrunShortcuts::OnProcess() {
 			}
 		}
 		else if (input_manager->IsKeyPressed(CKKEY_E)) {
+			if (!m_bml->IsIngame())
+				return;
 			auto* esc = static_cast<CKBehaviorIO*>(m_bml->GetCKContext()->GetObject(esc_event));
 			esc->Activate();
 

@@ -14,7 +14,7 @@ public:
 	SpeedrunShortcuts(IBML* bml) : IMod(bml) {}
 
 	virtual CKSTRING GetID() override { return "SpeedrunShortcuts"; }
-	virtual CKSTRING GetVersion() override { return "0.0.1"; }
+	virtual CKSTRING GetVersion() override { return "0.0.2"; }
 	virtual CKSTRING GetName() override { return "Speedrun Shortcuts"; }
 	virtual CKSTRING GetAuthor() override { return "BallanceBug"; }
 	virtual CKSTRING GetDescription() override { return "Provides keyboard shortcuts for speedrunning."; }
