@@ -25,19 +25,20 @@ void SpeedrunShortcuts::OnProcess() {
         return;
       if (!current_level) 
         current_level = m_bml->GetArrayByName("CurrentLevel");
-    
+
       if (m_bml->IsIngame() && current_level) {
         CK3dEntity* camRef = m_bml->Get3dEntityByName("Cam_OrientRef");
-        VxMatrix matrix = camRef->GetWorldMatrix();
-        for (int i = 0; i < 4; i++) {
-          std::swap(matrix[0][i], matrix[2][i]);
-          matrix[0][i] = -matrix[0][i];
+        VxMatrix mat = camRef->GetWorldMatrix();
+        for (int i = 0; i < 3; i++) {
+          std::swap(mat[0][i], mat[2][i]);
+          mat[0][i] = -mat[0][i];
         }
-        current_level->SetElementValue(0, 3, &matrix);
-        m_bml->SendIngameMessage(("Set Spawn Point to ("
-                                + std::to_string(matrix[3][0]) + ", "
-                                + std::to_string(matrix[3][1]) + ", "
-                                + std::to_string(matrix[3][2]) + ")").c_str());
+        current_level->SetElementValue(0, 3, &mat);
+        m_bml->SendIngameMessage(
+          ("Set Spawn Point to (" +
+           std::to_string(mat[3][0]) + ", " +
+           std::to_string(mat[3][1]) + ", " +
+           std::to_string(mat[3][2]) + ")").c_str());
       }
     }
     else if (input_manager->IsKeyPressed(CKKEY_E)) {
