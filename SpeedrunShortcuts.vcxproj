@@ -109,7 +109,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectPath)\..\..\..\..\GitHub\BallanceMMO\BallanceMMOClient\include;$(ProjectPath)\..\..\..\..\GitHub\BallanceMMO\BallanceMMOClient\include\Virtools;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Documents\GitHub\BallanceMMO\submodule\GameNetworkingSockets\include;D:\Documents\GitHub\BallanceMMO\BallanceMMOCommon;D:\Documents\GitHub\BallanceMMO\BallanceMMOClient\;D:\Documents\Ballance\include\Virtools;D:\Documents\Ballance\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalOptions>/Zc:strictStrings-</AdditionalOptions>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -121,7 +121,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(ProjectPath)\..\..\..\..\GitHub\BallanceMMO\BallanceMMOClient\lib\BMLPlus\BMLPlus.lib;$(ProjectPath)\..\..\..\..\GitHub\BallanceMMO\BallanceMMOClient\lib\BMLPlus\VxMath.lib;$(ProjectPath)\..\..\..\..\GitHub\BallanceMMO\BallanceMMOClient\lib\BMLPlus\CK2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>D:\Documents\Ballance\lib\BMLPlus\*.lib;D:\Documents\GitHub\BallanceMMO\Release\BallanceMMOClient.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
