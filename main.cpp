@@ -93,6 +93,7 @@ void SpeedrunShortcuts::OnProcess() {
           }
           else {
             bmmo::public_notification_msg msg{};
+            msg.type = bmmo::public_notification_type::Warning;
             msg.text_content = mmo_client->get_client_name() + " just restarted a level when their ball is not controllable.";
             msg.serialize();
             mmo_client->send(msg.raw.str().data(), msg.size(), k_nSteamNetworkingSend_Reliable);
