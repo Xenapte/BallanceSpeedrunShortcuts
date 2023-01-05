@@ -1,7 +1,7 @@
 #pragma once
 
 #include <BMLPlus/BMLAll.h>
-#include "client.h"
+#include "exported_client.h"
 
 extern "C" {
   __declspec(dllexport) IMod* BMLEntry(IBML* bml);
@@ -16,7 +16,7 @@ class SpeedrunShortcuts : public IMod {
   bool init = false, nav_inactive = true;
   IProperty* props[3]{}; // cheat, spawn, reset
   CKKEYBOARD keys[3]{}; // cheat, spawn, reset
-  client* mmo_client = nullptr;
+  bmmo::exported::client* mmo_client = nullptr;
   IProperty* prop_mmo_strict_mode{};
   bool mmo_strict_mode = false;
 
