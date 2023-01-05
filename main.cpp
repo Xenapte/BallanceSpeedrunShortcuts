@@ -86,14 +86,14 @@ void SpeedrunShortcuts::OnProcess() {
       if (!m_bml->IsIngame())
         return;
       if (mmo_client) {
-        if (mmo_client->connected() && nav_inactive && m_bml->IsPlaying()) {
+        if (mmo_client->connected() && !mmo_client->is_spectator() && nav_inactive && m_bml->IsPlaying()) {
           if (mmo_strict_mode) {
             m_bml->SendIngameMessage("Warning: you are connected to a BMMO server in Strict Mode and cannot reset inappropriately.");
             return;
           }
           else {
-            bmmo::public_warning_msg msg{};
-            msg.text_content = mmo_client->get_own_name() + " just restarted a level when their ball is not controllable.";
+            bmmo::public_notification_msg msg{};
+            msg.text_content = mmo_client->get_client_name() + " just restarted a level when their ball is not controllable.";
             msg.serialize();
             mmo_client->send(msg.raw.str().data(), msg.size(), k_nSteamNetworkingSend_Reliable);
           }
@@ -124,7 +124,7 @@ void SpeedrunShortcuts::OnPostStartMenu() {
     return;
   int count = m_bml->GetModCount();
   for (int i = 0; i < count; i++) {
-    mmo_client = dynamic_cast<client*>(m_bml->GetMod(i));
+    mmo_client = dynamic_cast<decltype(mmo_client)>(m_bml->GetMod(i));
     if (mmo_client != nullptr) {
       GetLogger()->Info("Presence of BMMO client detected, got pointer at %#010x", mmo_client);
       break;
