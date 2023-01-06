@@ -88,13 +88,14 @@ void SpeedrunShortcuts::OnProcess() {
       if (mmo_client) {
         if (mmo_client->connected() && !mmo_client->is_spectator() && nav_inactive && m_bml->IsPlaying()) {
           if (mmo_strict_mode) {
-            m_bml->SendIngameMessage("Warning: you are connected to a BMMO server in Strict Mode and cannot reset inappropriately.");
+            m_bml->SendIngameMessage("Warning: you have connected to a BMMO server in Strict Mode and cannot reset inappropriately.");
             return;
           }
           else {
             bmmo::public_notification_msg msg{};
             msg.type = bmmo::public_notification_type::Warning;
-            msg.text_content = mmo_client->get_client_name() + " just restarted a level when their ball is not controllable.";
+            msg.text_content = mmo_client->get_client_name() + " just restarted "
+              + mmo_client->get_current_map().get_display_name() + " when their ball is not controllable.";
             msg.serialize();
             mmo_client->send(msg.raw.str().data(), msg.size(), k_nSteamNetworkingSend_Reliable);
           }
@@ -103,10 +104,10 @@ void SpeedrunShortcuts::OnProcess() {
       auto* esc = static_cast<CKBehaviorIO*>(m_bml->GetCKContext()->GetObject(esc_event));
       esc->Activate();
 
-      //m_bml->AddTimer(3u, [this]() {
-      std::thread([this] {
+      m_bml->AddTimer(3u, [this]() {
+      // std::thread([this] {
         CKMessageManager* mm = m_bml->GetMessageManager();
-        std::this_thread::sleep_for(std::chrono::milliseconds(120));
+        // std::this_thread::sleep_for(std::chrono::milliseconds(120));
 
         CKMessageType reset_level_msg = mm->AddMessageType("Reset Level");
         mm->SendMessageSingle(reset_level_msg, static_cast<CKBeObject*>(m_bml->GetCKContext()->GetObjectByNameAndParentClass("Level", CKCID_BEOBJECT, nullptr)));
@@ -115,7 +116,7 @@ void SpeedrunShortcuts::OnProcess() {
         auto* beh = static_cast<CKBehavior*>(m_bml->GetCKContext()->GetObject(restart_level));
         auto* output = beh->GetOutput(0);
         output->Activate();
-      }).detach();
+      }); //.detach();
     }
   }
 }
