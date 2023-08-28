@@ -41,6 +41,10 @@ void SpeedrunShortcuts::OnLoad() {
   tmp_prop->SetDefaultKey(CKKEY_W);
   tmp_prop->SetComment("The key for setting the current sector (with a number key).");
   props[3] = tmp_prop;
+  tmp_prop = GetConfig()->GetProperty("Keys", "ModifierKey");
+  tmp_prop->SetDefaultKey(CKKEY_LMENU);
+  tmp_prop->SetComment("The key to use together with keys above to trigger different functions.");
+  props[PROP_LENGTH - 1] = tmp_prop;
   for (int i = 0; i < PROP_LENGTH; i ++) {
     update_key_property(i);
   }
@@ -245,7 +249,7 @@ void SpeedrunShortcuts::reset_ball() {
 }
 
 void SpeedrunShortcuts::OnProcess() {
-  if (!input_manager->IsKeyDown(CKKEY_LMENU))
+  if (!input_manager->IsKeyDown(keys[PROP_LENGTH - 1]))
     return;
 
   if (input_manager->IsKeyPressed(keys[0])) {
@@ -261,7 +265,16 @@ void SpeedrunShortcuts::OnProcess() {
     for (CKDWORD num_key = CKKEY_1; num_key <= CKKEY_9; num_key++) {
       if (!input_manager->IsKeyPressed(num_key))
         continue;
-      m_bml->SendIngameMessage(std::to_string(num_key - CKKEY_1 + 1).c_str());
+      set_sector(num_key - CKKEY_1 + 1);
+      return;
+    }
+    constexpr CKKEYBOARD numpad_keys[] = { CKKEY_NUMPAD1, CKKEY_NUMPAD2, CKKEY_NUMPAD3,
+                                           CKKEY_NUMPAD4, CKKEY_NUMPAD5, CKKEY_NUMPAD6,
+                                           CKKEY_NUMPAD7, CKKEY_NUMPAD8, CKKEY_NUMPAD9 };
+    for (int i = 0; i < sizeof(numpad_keys) / sizeof(std::remove_all_extents_t<decltype(numpad_keys)>); i++) {
+      if (!input_manager->IsKeyPressed(numpad_keys[i]))
+        continue;
+      set_sector(i + 1);
       return;
     }
   }

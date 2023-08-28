@@ -14,9 +14,10 @@ class SpeedrunShortcuts : public IMod {
   CK_ID esc_event{}, restart_level_action{};
   CKBehavior* dynamic_pos{}, * phy_new_ball{};
   bool init = false, nav_inactive = true;
-  constexpr static int PROP_LENGTH = 4;
-  IProperty* props[PROP_LENGTH]{}; // cheat, spawn, reset, sector
-  CKKEYBOARD keys[PROP_LENGTH]{}; // cheat, spawn, reset, sector
+  constexpr static int PROP_LENGTH = 5;
+  // cheat, spawn, reset, sector, modifier
+  IProperty* props[PROP_LENGTH]{};
+  CKKEYBOARD keys[PROP_LENGTH]{};
   bmmo::exported::client* mmo_client = nullptr;
   IProperty* prop_mmo_strict_mode{};
   bool mmo_strict_mode = false;
