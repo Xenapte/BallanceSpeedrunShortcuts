@@ -94,7 +94,13 @@ void SpeedrunShortcuts::set_spawn() {
   if (m_bml->IsIngame() && current_level) {
     CK3dEntity* camRef = m_bml->Get3dEntityByName("Cam_OrientRef");
     VxMatrix matrix = camRef->GetWorldMatrix();
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0;
+#ifdef BMMO_USE_BML_PLUS
+         i < 3;
+#else
+         i < 4;
+#endif // BMMO_USE_BML_PLUS
+         i++) {
       std::swap(matrix[0][i], matrix[2][i]);
       matrix[0][i] = -matrix[0][i];
     }
