@@ -123,7 +123,7 @@ void SpeedrunShortcuts::restart_level() {
       }
       else {
         bmmo::public_notification_msg msg{};
-        msg.type = bmmo::public_notification_type::Warning;
+        msg.type = bmmo::public_notification_type::SeriousWarning;
         msg.text_content = mmo_client->get_own_id().second + " just restarted "
           + mmo_client->get_current_map().get_display_name() + " when their ball is not controllable.";
         msg.serialize();
