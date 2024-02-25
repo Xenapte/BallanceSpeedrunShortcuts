@@ -22,6 +22,13 @@ class SpeedrunShortcuts : public IMod {
   IProperty* prop_mmo_strict_mode{};
   bool mmo_strict_mode = false;
 
+  const std::string version = []() -> decltype(version) {
+    char version_str[32];
+    std::snprintf(version_str, sizeof(version_str), "0.2.2_bmmo-%u.%u.%u",
+                  bmmo::current_version.major, bmmo::current_version.minor, bmmo::current_version.subminor);
+    return version_str;
+  }();
+
   void update_key_property(int index);
 
   void extract_scripts();
@@ -37,7 +44,7 @@ public:
   SpeedrunShortcuts(IBML* bml) : IMod(bml) {}
 
   virtual BMMO_CKSTRING GetID() override { return "SpeedrunShortcuts"; }
-  virtual BMMO_CKSTRING GetVersion() override { return "0.2.2_bmmo-3.5.8"; }
+  virtual BMMO_CKSTRING GetVersion() override { return version.c_str(); }
   virtual BMMO_CKSTRING GetName() override { return "Speedrun Shortcuts"; }
   virtual BMMO_CKSTRING GetAuthor() override { return "BallanceBug"; }
   virtual BMMO_CKSTRING GetDescription() override { return "Keyboard shortcuts useful for speedrunning."; }
