@@ -24,27 +24,27 @@ void SpeedrunShortcuts::OnBallNavInactive() { nav_inactive = true; }
 void SpeedrunShortcuts::OnBallNavActive() { nav_inactive = false; }
 
 void SpeedrunShortcuts::OnLoad() {
-  GetConfig()->SetCategoryComment("Keys", "Set the keys used to trigger actions. Must be used with the Alt key.");
+  GetConfig()->SetCategoryComment("Keys", "Set the keys used to trigger actions. Must be used with the Modifier key.");
   auto tmp_prop = GetConfig()->GetProperty("Keys", "CheatToggle");
   tmp_prop->SetDefaultKey(CKKEY_C);
   tmp_prop->SetComment("The key for toggling Cheat Mode.");
-  props[0] = tmp_prop;
+  props[CheatToggle] = tmp_prop;
   tmp_prop = GetConfig()->GetProperty("Keys", "SetSpawn");
   tmp_prop->SetDefaultKey(CKKEY_S);
   tmp_prop->SetComment("The key for setting spawn points (under Cheat Mode).");
-  props[1] = tmp_prop;
+  props[Spawn] = tmp_prop;
   tmp_prop = GetConfig()->GetProperty("Keys", "Restart");
   tmp_prop->SetDefaultKey(CKKEY_E);
   tmp_prop->SetComment("The key for restarting the current level.");
-  props[2] = tmp_prop;
+  props[Restart] = tmp_prop;
   tmp_prop = GetConfig()->GetProperty("Keys", "SetSector");
   tmp_prop->SetDefaultKey(CKKEY_W);
   tmp_prop->SetComment("The key for setting the current sector (with a number key).");
-  props[3] = tmp_prop;
+  props[Sector] = tmp_prop;
   tmp_prop = GetConfig()->GetProperty("Keys", "ModifierKey");
   tmp_prop->SetDefaultKey(CKKEY_LMENU);
   tmp_prop->SetComment("The key to use together with keys above to trigger different functions.");
-  props[PROP_LENGTH - 1] = tmp_prop;
+  props[ModifierKey] = tmp_prop;
   for (int i = 0; i < PROP_LENGTH; i ++) {
     update_key_property(i);
   }
@@ -254,20 +254,36 @@ void SpeedrunShortcuts::reset_ball() {
   });
 }
 
+bool SpeedrunShortcuts::restart_available() {
+  if (keys[Restart] != keys[ModifierKey])
+    return true;
+  static float last_pressed_time = 0.0f;
+  if (m_bml->GetTimeManager()->GetTime() - last_pressed_time > 3000.0f) {
+    char name[16];
+    input_manager->GetKeyName(keys[Restart], name);
+    m_bml->SendIngameMessage(std::string{ "Note: press <" }.append(name).append("> again in 3 seconds to restart.").c_str());
+    last_pressed_time = m_bml->GetTimeManager()->GetTime();
+    return false;
+  }
+  last_pressed_time = 0.0f;
+  return true;
+}
+
 void SpeedrunShortcuts::OnProcess() {
   if (!input_manager->IsKeyDown(keys[PROP_LENGTH - 1]))
     return;
 
-  if (input_manager->IsKeyPressed(keys[0])) {
+  if (input_manager->IsKeyPressed(keys[CheatToggle])) {
     toggle_cheat();
   }
-  else if (input_manager->IsKeyPressed(keys[1])) {
+  else if (input_manager->IsKeyPressed(keys[Spawn])) {
     set_spawn();
   }
-  else if (input_manager->IsKeyPressed(keys[2])) {
+  else if (input_manager->IsKeyPressed(keys[Restart])) {
+    if (!restart_available()) return;
     restart_level();
   }
-  else if (input_manager->IsKeyDown(keys[3])) {
+  else if (input_manager->IsKeyDown(keys[ModifierKey])) {
     for (CKDWORD num_key = CKKEY_1; num_key <= CKKEY_9; num_key++) {
       if (!input_manager->IsKeyPressed(num_key))
         continue;

@@ -22,9 +22,13 @@ class SpeedrunShortcuts : public IMod {
   IProperty* prop_mmo_strict_mode{};
   bool mmo_strict_mode = false;
 
+  enum IndexName {
+    CheatToggle, Spawn, Restart, Sector, ModifierKey
+  };
+
   const std::string version = []() -> decltype(version) {
     char version_str[32];
-    std::snprintf(version_str, sizeof(version_str), "0.2.2_bmmo-%u.%u.%u",
+    std::snprintf(version_str, sizeof(version_str), "0.2.3_bmmo-%u.%u.%u",
                   bmmo::current_version.major, bmmo::current_version.minor, bmmo::current_version.subminor);
     return version_str;
   }();
@@ -37,6 +41,8 @@ class SpeedrunShortcuts : public IMod {
   void set_spawn();
   void restart_level();
   void set_sector(int sector_input);
+
+  bool restart_available();
 
   void reset_ball();
 
